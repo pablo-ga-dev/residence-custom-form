@@ -20,7 +20,7 @@
 								aria-label="Restar unidad de <?php echo esc_attr( $product['title'] ); ?>"
 								onclick="changeQty(<?php echo (int) $product['id']; ?>, -1)">-</button>
 							<input type="number" name="qty[<?php echo (int) $product['id']; ?>]"
-								id="input-qty-<?php echo (int) $product['id']; ?>" class="rcf-qty-input" min="0" value="0"
+								id="rcf-input-qty-<?php echo (int) $product['id']; ?>" class="rcf-qty-input" min="0" value="0"
 								data-price="<?php echo esc_attr( $product['price'] ); ?>"
 								data-name="<?php echo esc_attr( $product['title'] ); ?>">
 							<button type="button" class="rcf-qty-button"

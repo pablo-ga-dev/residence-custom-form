@@ -20,8 +20,11 @@ class AssetsManager {
             'rcf-app',
             self::getUrl('js/app.js'),
             array(),
-            Config::VERSION
+            Config::VERSION,
+            true
         );
+
+        // TODO: Localize script with necessary data for AJAX requests and security
     }
 
     public function enqueue_styles() {

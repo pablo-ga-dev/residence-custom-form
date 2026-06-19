@@ -1,49 +1,50 @@
-function changeQty(id, delta) {
-    const input = document.getElementById('input-qty-' + id);
-    let val = parseInt(input.value) || 0;
-    val += delta;
-    if (val < 0) val = 0;
-    input.value = val;
-    input.dispatchEvent(new Event('input', { bubbles: true }));
+document.addEventListener('DOMContentLoaded', function () {
+    
+});
+
+function changeQty(productId, qty) {
+    const input = document.querySelector(`#rcf-input-qty-${productId}`);
+    if (!input || (input.value <= 0 && qty < 0)) {
+        return;
+    }
+    input.value = parseInt(input.value) + qty;
+    updateSummary();
 }
 
-window.changeQty = changeQty;
+function updateSummary() {
+    const summaryItemsContainer = document.querySelector('#rcf-summary-items');
+    const summaryTotal = document.querySelector('#rcf-summary-total');
+    const qtyInputs = document.querySelectorAll('.rcf-product-qty .rcf-qty-input');
 
-document.addEventListener('DOMContentLoaded', function () {
-    const qtyInputs = document.querySelectorAll('.menaki-qty-input');
-    const summaryItems = document.getElementById('menaki-summary-items');
-    const summaryTotal = document.getElementById('menaki-summary-total');
+    let totalPrice = 0;
+    let hasItems = false;
 
-    function updateMenakiCalculator() {
-        let html = '';
-        let total = 0;
-        let hasItems = false;
+    summaryItemsContainer.innerHTML = '';
 
-        qtyInputs.forEach(input => {
-            const qty = parseInt(input.value) || 0;
-            if (qty > 0) {
-                const price = parseFloat(input.getAttribute('data-price')) || 0;
-                const name = input.getAttribute('data-name');
-                const subtotal = price * qty;
-                total += subtotal;
-                hasItems = true;
+    for (const input of qtyInputs) {
+        const qty = parseInt(input.value);
+        if (qty > 0) {
+            hasItems = true;
+            const productName = input.dataset.name;
+            const productPrice = parseFloat(input.dataset.price);
+            const itemTotalPrice = qty * productPrice;
+            totalPrice += itemTotalPrice;
 
-                html += `<div class="rcf-summary-item">
-                        <span class="rcf-summary-item__name">${name} <strong>(x${qty})</strong></span>
-                        <span class="rcf-summary-item__subtotal">${subtotal.toFixed(2)}€</span>
-                    </div>`;
-            }
-        });
-
-        if (!hasItems) {
-            summaryItems.innerHTML = '<p class="rcf-summary-empty">No has seleccionado ningún pack todavía.</p>';
-        } else {
-            summaryItems.innerHTML = html;
+            const itemElement = document.createElement('div');
+            itemElement.classList.add('rcf-summary-item');
+            itemElement.textContent = `${productName} x ${qty} - ${itemTotalPrice.toFixed(2)}€`;
+            summaryItemsContainer.appendChild(itemElement);
         }
-        summaryTotal.textContent = total.toFixed(2) + '€';
     }
 
-    qtyInputs.forEach(input => {
-        input.addEventListener('input', updateMenakiCalculator);
-    });
-});
+    if (!hasItems) {
+        const emptyMessage = document.createElement('p');
+        emptyMessage.classList.add('rcf-summary-empty');
+        emptyMessage.textContent = 'No has seleccionado ningún pack todavía.';
+        summaryItemsContainer.appendChild(emptyMessage);
+    }
+
+    summaryTotal.textContent = `${totalPrice.toFixed(2)}€`;
+}
+
+// TODO: Implement form submission logic, validation, and AJAX request to submit the form data to the server.
