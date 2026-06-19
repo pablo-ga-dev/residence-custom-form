@@ -5,7 +5,7 @@ Description: Listado de packs por categoría con foto, selector de cantidad, for
 Version: 1.2
 Author: Crear & Co
 */
-
+// test
 if ( !defined( 'ABSPATH' ) ) {
 	die( 'Kangaroos cant jump here.' );
 }
