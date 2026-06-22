@@ -32,24 +32,21 @@ class AdminPanel {
 	}
 
 	public function save_post( int $post_id ) {
-		if (
-			! isset( $_POST['producto_precio_nonce'] ) ||
-			! wp_verify_nonce( $_POST['producto_precio_nonce'], 'guardar_producto_precio' )
-		) {
-			return;
-		}
-
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 			return;
 
 		if ( ! current_user_can( 'edit_post', $post_id ) )
 			return;
 
-		if ( isset( $_POST['producto_precio'] ) ) {
+		if (
+			isset( $_POST['producto_precio_nonce'] ) &&
+			wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['producto_precio_nonce'] ) ), 'guardar_producto_precio' ) &&
+			isset( $_POST['producto_precio'] )
+		) {
 			update_post_meta(
 				$post_id,
 				'_producto_precio',
-				sanitize_text_field( $_POST['producto_precio'] )
+				sanitize_text_field( wp_unslash( $_POST['producto_precio'] ) )
 			);
 		}
 	}

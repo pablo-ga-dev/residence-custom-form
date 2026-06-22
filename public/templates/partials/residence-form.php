@@ -2,9 +2,14 @@
 	<h3 class="rcf-section-title">Información de entrega</h3>
 	<div class="rcf-form-fields">
 		<div class="rcf-form-field">
-			<label class="rcf-field-label rcf-sr-only" for="rcf-customer-name">Nombre y apellidos</label>
+			<label class="rcf-field-label rcf-sr-only" for="rcf-customer-name">Nombre empresa</label>
 			<input type="text" name="nombre" id="rcf-customer-name" class="rcf-form-input" required
-				placeholder="Nombre y Apellidos *">
+				placeholder="Nombre empresa *">
+		</div>
+		<div class="rcf-form-field">
+			<label class="rcf-field-label rcf-sr-only" for="rcf-customer-cif">CIF</label>
+			<input type="text" name="cif" id="rcf-customer-cif" class="rcf-form-input" required
+				placeholder="CIF *">
 		</div>
 		<div class="rcf-form-field">
 			<label class="rcf-field-label rcf-sr-only" for="rcf-customer-phone">Teléfono de contacto</label>
@@ -17,8 +22,12 @@
 				placeholder="Correo electrónico *">
 		</div>
 		<div class="rcf-form-field">
-			<label class="rcf-field-label rcf-sr-only" for="rcf-customer-message">Mensaje</label>
-			<input type="text" name="direccion" id="rcf-customer-message" class="rcf-form-input" placeholder="Mensaje">
+			<label class="rcf-field-label rcf-sr-only" for="rcf-customer-shipping-address">Dirección de envío</label>
+			<input type="text" name="direccion_envio" id="rcf-customer-shipping-address" class="rcf-form-input" placeholder="Dirección de envío">
+		</div>
+		<div class="rcf-form-field">
+			<label class="rcf-field-label rcf-sr-only" for="rcf-customer-billing-address">Dirección de facturación</label>
+			<input type="text" name="direccion_facturacion" id="rcf-customer-billing-address" class="rcf-form-input" placeholder="Dirección de facturación">
 		</div>
 	</div>
 </div>

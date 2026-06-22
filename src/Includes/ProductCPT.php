@@ -18,6 +18,24 @@ class ProductCPT {
 			'public' => true,
 			'menu_icon' => 'dashicons-products',
 			'supports' => [ 'title', 'thumbnail' ],
+			'taxonomies' => [ 'producto_categoria' ],
+			'show_in_rest' => true,
+		] );
+
+		register_taxonomy( 'producto_categoria', [ 'producto' ], [
+			'labels' => [
+				'name' => 'Categorias de producto',
+				'singular_name' => 'Categoria de producto',
+				'search_items' => 'Buscar categorias',
+				'all_items' => 'Todas las categorias',
+				'edit_item' => 'Editar categoria',
+				'update_item' => 'Actualizar categoria',
+				'add_new_item' => 'Anadir nueva categoria',
+				'new_item_name' => 'Nombre de la categoria',
+				'menu_name' => 'Categorias',
+			],
+			'hierarchical' => true,
+			'show_admin_column' => true,
 			'show_in_rest' => true,
 		] );
 	}

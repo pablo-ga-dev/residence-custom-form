@@ -27,6 +27,7 @@ class ClientForm {
 
 	public function render() {
 		$products = $this->productModel->get_products();
+		$products_by_category = $this->group_products_by_category( $products );
 		$templates = $this->get_templates();
 
 		if ( ! file_exists( $templates['residence_form'] ) || ! file_exists( $templates['product_list'] ) || ! file_exists( $templates['summary'] ) ) {
@@ -38,11 +39,65 @@ class ClientForm {
 		<div id="rcf-wrapper" class="rcf-wrapper">
 			<?php include $templates['product_list']; ?>
 			<aside id="rcf-form-container" class="rcf-form-container">
-				<?php include $templates['residence_form']; ?>
-				<?php include $templates['summary']; ?>
+				<form id="rcf-order-form" class="rcf-order-form" method="post" action="#">
+					<?php include $templates['residence_form']; ?>
+					<?php include $templates['summary']; ?>
+				</form>
 			</aside>
 		</div>
 		<?php
 		return ob_get_clean();
+	}
+
+	private function group_products_by_category( array $products ): array {
+		$grouped = [];
+
+		foreach ( $products as $product ) {
+			$categories = $product['categories'] ?? [];
+
+			if ( empty( $categories ) ) {
+				$key = 'uncategorized';
+				if ( ! isset( $grouped[ $key ] ) ) {
+					$grouped[ $key ] = [
+						'id' => 0,
+						'name' => 'Sin categoría',
+						'slug' => $key,
+						'products' => [],
+					];
+				}
+
+				$grouped[ $key ]['products'][] = $product;
+				continue;
+			}
+
+			foreach ( $categories as $category ) {
+				$key = 'term_' . (int) ( $category['id'] ?? 0 );
+				if ( ! isset( $grouped[ $key ] ) ) {
+					$grouped[ $key ] = [
+						'id' => (int) ( $category['id'] ?? 0 ),
+						'name' => $category['name'] ?? 'Sin categoría',
+						'slug' => $category['slug'] ?? '',
+						'products' => [],
+					];
+				}
+
+				$grouped[ $key ]['products'][] = $product;
+			}
+		}
+
+		$grouped_values = array_values( $grouped );
+
+		usort( $grouped_values, function ( array $a, array $b ) {
+			$count_a = count( $a['products'] ?? [] );
+			$count_b = count( $b['products'] ?? [] );
+
+			if ( $count_a !== $count_b ) {
+				return $count_b <=> $count_a;
+			}
+
+			return strcasecmp( (string) ( $a['name'] ?? '' ), (string) ( $b['name'] ?? '' ) );
+		} );
+
+		return $grouped_values;
 	}
 }

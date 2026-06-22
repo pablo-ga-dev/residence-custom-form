@@ -3,7 +3,7 @@
 namespace Crearco\Rcf\Model;
 
 class ProductModel {
-    public function get_products() {
+	public function get_products() {
 		$args = [
 			'post_type' => 'producto',
 			'posts_per_page' => -1,
@@ -14,11 +14,25 @@ class ProductModel {
 		$products = [];
 
 		foreach ( $query->posts as $post ) {
+			$terms = get_the_terms( $post->ID, 'producto_categoria' );
+			$categories = [];
+
+			if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
+				foreach ( $terms as $term ) {
+					$categories[] = [
+						'id' => (int) $term->term_id,
+						'name' => $term->name,
+						'slug' => $term->slug,
+					];
+				}
+			}
+
 			$products[] = [
 				'id' => $post->ID,
 				'title' => get_the_title( $post->ID ),
 				'price' => get_post_meta( $post->ID, '_producto_precio', true ),
 				'image' => get_the_post_thumbnail_url( $post->ID, 'medium' ) ?: '',
+				'categories' => $categories,
 			];
 		}
 
