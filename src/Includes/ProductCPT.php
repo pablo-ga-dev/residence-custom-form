@@ -15,7 +15,15 @@ class ProductCPT {
 				'add_new_item' => 'Añadir producto formulario',
 				'edit_item' => 'Editar producto formulario',
 			],
-			'public' => true,
+			// This CPT is only used as an internal catalog for the shortcode form.
+			'public' => false,
+			'publicly_queryable' => false,
+			'exclude_from_search' => true,
+			'show_ui' => true,
+			'show_in_menu' => true,
+			'has_archive' => false,
+			'rewrite' => false,
+			'query_var' => false,
 			'menu_icon' => 'dashicons-products',
 			'supports' => [ 'title', 'thumbnail' ],
 			'taxonomies' => [ 'producto_categoria' ],
@@ -34,8 +42,11 @@ class ProductCPT {
 				'new_item_name' => 'Nombre de la categoria',
 				'menu_name' => 'Categorias',
 			],
+			'public' => false,
+			'publicly_queryable' => false,
 			'hierarchical' => true,
 			'show_admin_column' => true,
+			'rewrite' => false,
 			'show_in_rest' => true,
 		] );
 	}

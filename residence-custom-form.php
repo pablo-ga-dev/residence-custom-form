@@ -2,7 +2,7 @@
 /*
 Plugin Name: Formulario de Pedido Único - Menaki Style
 Description: Listado de packs por categoría con foto, selector de cantidad, formulario y resumen flotante con la identidad corporativa de Menaki. Correo HTML premium incluido.
-Version: 1.2.1
+Version: 1.2.2
 Author: Crear & Co
 */
 

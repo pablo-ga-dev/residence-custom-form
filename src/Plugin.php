@@ -11,6 +11,8 @@ use Crearco\Rcf\Routes\FormSubmitRoute;
 use DI\Container;
 
 class Plugin {
+	private const REWRITE_FLUSHED_OPTION = 'rcf_rewrite_flushed_version';
+
 	private Container $container;
 	private AssetsManager $assetsManager;
 	private ProductCPT $productCPT;
@@ -31,8 +33,20 @@ class Plugin {
 		add_action( 'wp_enqueue_scripts', [ $this->assetsManager, 'enqueue_scripts' ] );
 		add_action( 'wp_enqueue_scripts', [ $this->assetsManager, 'enqueue_styles' ] );
 		add_shortcode( 'client_form', [ $this->clientForm, 'render' ] );
+		add_action( 'init', [ $this, 'maybe_flush_rewrite_rules' ], 99 );
 		$this->formSubmitRoute->register();
 		$this->productCPT->init();
 		$this->adminPanel->init();
+	}
+
+	public function maybe_flush_rewrite_rules(): void {
+		$flushed_version = get_option( self::REWRITE_FLUSHED_OPTION, '' );
+
+		if ( $flushed_version === Config::VERSION ) {
+			return;
+		}
+
+		flush_rewrite_rules( false );
+		update_option( self::REWRITE_FLUSHED_OPTION, Config::VERSION, false );
 	}
 }
