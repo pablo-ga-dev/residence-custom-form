@@ -14,6 +14,11 @@ class ProductModel {
 		$products = [];
 
 		foreach ( $query->posts as $post ) {
+			$thumbnail_id = get_post_thumbnail_id( $post->ID );
+			$thumbnail_medium = $thumbnail_id ? wp_get_attachment_image_url( $thumbnail_id, 'medium' ) : '';
+			$thumbnail_large = $thumbnail_id ? wp_get_attachment_image_url( $thumbnail_id, 'large' ) : '';
+			$thumbnail_full = $thumbnail_id ? wp_get_attachment_image_url( $thumbnail_id, 'full' ) : '';
+
 			$terms = get_the_terms( $post->ID, 'producto_categoria' );
 			$categories = [];
 
@@ -31,7 +36,8 @@ class ProductModel {
 				'id' => $post->ID,
 				'title' => get_the_title( $post->ID ),
 				'price' => get_post_meta( $post->ID, '_producto_precio', true ),
-				'image' => get_the_post_thumbnail_url( $post->ID, 'medium' ) ?: '',
+				'image' => $thumbnail_medium ?: '',
+				'image_large' => $thumbnail_large ?: ( $thumbnail_full ?: ( $thumbnail_medium ?: '' ) ),
 				'categories' => $categories,
 			];
 		}

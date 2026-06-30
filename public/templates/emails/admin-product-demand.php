@@ -38,6 +38,7 @@
 							<thead>
 								<tr style="background:#eeeeee;">
 									<th align="left">Producto</th>
+									<th align="left">Referencia</th>
 									<th align="center">Cantidad</th>
 									<th align="right">Precio</th>
 								</tr>
@@ -46,8 +47,13 @@
 								<?php foreach ( $data['productos'] as $producto ) : ?>
 									<tr>
 										<td style="border-bottom:1px solid #dddddd;"><?php echo $producto['nombre']; ?></td>
-										<td align="center" style="border-bottom:1px solid #dddddd;"><?php echo $producto['cantidad']; ?></td>
-										<td align="right" style="border-bottom:1px solid #dddddd;"><?php echo $producto['precio']; ?></td>
+										<td style="border-bottom:1px solid #dddddd;">
+											<?php echo ! empty( $producto['referencia'] ) ? $producto['referencia'] : '-'; ?>
+										</td>
+										<td align="center" style="border-bottom:1px solid #dddddd;">
+											<?php echo $producto['cantidad']; ?></td>
+										<td align="right" style="border-bottom:1px solid #dddddd;">
+											<?php echo $producto['precio']; ?></td>
 									</tr>
 								<?php endforeach; ?>
 							</tbody>

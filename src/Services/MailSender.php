@@ -62,8 +62,13 @@ class MailSender {
 		}
 
 		$products = array_map( function ( $product ) {
+			$product_id = absint( $product['id'] ?? 0 );
+			$product_reference = $this->getProductReference( $product_id );
+
 			return array(
+				'id' => $product_id,
 				'nombre' => sanitize_text_field( $product['name'] ?? '' ),
+				'referencia' => $product_reference,
 				'cantidad' => intval( $product['quantity'] ?? 0 ),
 				'precio' => floatval( $product['price'] ?? 0 ),
 			);
@@ -90,5 +95,13 @@ class MailSender {
 		ob_start();
 		include $this->getTemplatePath( 'emails/admin-product-demand.php' );
 		return ob_get_clean();
+	}
+
+	private function getProductReference( int $product_id ): string {
+		if ( $product_id <= 0 || get_post_type( $product_id ) !== 'producto' ) {
+			return '';
+		}
+
+		return sanitize_text_field( (string) get_post_meta( $product_id, '_producto_referencia', true ) );
 	}
 }

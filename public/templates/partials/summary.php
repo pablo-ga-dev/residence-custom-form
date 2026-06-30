@@ -7,5 +7,5 @@
 		<span class="rcf-summary-total-label">Total:</span>
 		<span class="rcf-summary-total-value" id="rcf-summary-total">0.00€</span>
 	</div>
-	<button type="submit" name="enviar_pedido_menaki" class="rcf-submit-button">Reservar mi Pack</button>
+	<button type="submit" name="enviar_pedido_menaki" class="rcf-submit-button">Solicitar presupuesto</button>
 </div>

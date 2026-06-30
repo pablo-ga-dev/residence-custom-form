@@ -44,8 +44,11 @@ class ProductCPT {
 			],
 			'public' => false,
 			'publicly_queryable' => false,
+			'show_ui' => true,
+			'show_in_menu' => true,
 			'hierarchical' => true,
 			'show_admin_column' => true,
+			'show_in_quick_edit' => true,
 			'rewrite' => false,
 			'show_in_rest' => true,
 		] );

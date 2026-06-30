@@ -39,6 +39,7 @@
     display: grid;
     gap: var(--rcf-spacing-4);
     grid-template-columns: 2fr 1fr;
+    min-width: 100%;
 }
 
 #rcf-wrapper .rcf-products-panel {
@@ -86,6 +87,8 @@
 }
 
 #rcf-wrapper .rcf-product-media {
+    appearance: none;
+    border: 1px solid var(--rcf-color-border);
     border-radius: var(--rcf-radius-sm);
     overflow: hidden;
     background-color: #eef2f7;
@@ -94,6 +97,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0;
+    cursor: zoom-in;
+}
+
+#rcf-wrapper .rcf-product-media:focus-visible {
+    outline: 3px solid var(--rcf-color-focus);
+    outline-offset: 2px;
 }
 
 #rcf-wrapper .rcf-product-image {
@@ -101,7 +111,63 @@
     height: auto;
     object-fit: contain;
     display: block;
-    border: 1px solid black;
+}
+
+#rcf-wrapper .rcf-image-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(10, 10, 10, 0.78);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+#rcf-wrapper .rcf-image-lightbox[hidden] {
+    display: none;
+}
+
+#rcf-wrapper .rcf-image-lightbox-dialog {
+    position: relative;
+    max-height: 90vh;
+    background: #fff;
+    border: 1px solid var(--rcf-color-border);
+    box-shadow: var(--rcf-shadow-md);
+    padding: 0;
+}
+
+#rcf-wrapper .rcf-image-lightbox-image {
+    width: 100%;
+    max-height: calc(90vh - 40px);
+    object-fit: contain;
+    display: block;
+}
+
+#rcf-wrapper .rcf-image-lightbox-close {
+    appearance: none;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    max-width: 20px;
+    aspect-ratio: 1 / 1;
+    border: 1px solid var(--rcf-color-border);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--rcf-color-text);
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1rem;
+}
+
+#rcf-wrapper .rcf-image-lightbox-close:focus-visible {
+    outline: 3px solid var(--rcf-color-focus);
+    outline-offset: 2px;
 }
 
 #rcf-wrapper .rcf-product-content {
@@ -385,5 +451,18 @@
 
     #rcf-wrapper .rcf-product-qty {
         align-content: end;
+    }
+
+    #rcf-wrapper .rcf-image-lightbox {
+        padding: 10px;
+    }
+
+    #rcf-wrapper .rcf-image-lightbox-dialog {
+        width: 100%;
+        max-height: 92vh;
+    }
+
+    #rcf-wrapper .rcf-image-lightbox-image {
+        max-height: calc(92vh - 30px);
     }
 }

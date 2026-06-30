@@ -8,10 +8,13 @@
 					<?php foreach ( $category_group['products'] as $product ) : ?>
 						<article class="rcf-product-card" id="rcf-product-<?php echo (int) $product['id']; ?>">
 							<?php if ( ! empty( $product['image'] ) ) : ?>
-								<div class="rcf-product-media">
+								<button type="button" class="rcf-product-media" data-rcf-lightbox-trigger="true"
+									data-image-src="<?php echo esc_url( $product['image_large'] ?? $product['image'] ); ?>"
+									data-image-alt="<?php echo esc_attr( $product['title'] ); ?>"
+									aria-label="Ver imagen ampliada de <?php echo esc_attr( $product['title'] ); ?>">
 									<img src="<?php echo esc_url( $product['image'] ); ?>" class="rcf-product-image"
 										alt="<?php echo esc_attr( $product['title'] ); ?>">
-								</div>
+								</button>
 							<?php endif; ?>
 							<div class="rcf-product-content">
 								<div class="rcf-product-info">
@@ -39,4 +42,11 @@
 			<?php endforeach; ?>
 		</div>
 	<?php endif; ?>
+	<div class="rcf-image-lightbox" id="rcf-image-lightbox" hidden aria-hidden="true">
+		<div class="rcf-image-lightbox-dialog" role="dialog" aria-modal="true" aria-label="Vista ampliada de producto">
+			<button type="button" class="rcf-image-lightbox-close" id="rcf-image-lightbox-close"
+				aria-label="Cerrar vista ampliada">x</button>
+			<img src="" alt="" class="rcf-image-lightbox-image" id="rcf-image-lightbox-image">
+		</div>
+	</div>
 </div>

@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     addGlobalErrorHandling();
+    initProductImageLightbox();
 
     const form = document.querySelector('#rcf-order-form');
     if (form) {
@@ -196,5 +197,62 @@ function addGlobalErrorHandling() {
 
     window.addEventListener('unhandledrejection', function (event) {
         console.error('Promesa rechazada no controlada:', event.reason);
+    });
+}
+
+function initProductImageLightbox() {
+    const lightbox = document.querySelector('#rcf-image-lightbox');
+    const lightboxImage = document.querySelector('#rcf-image-lightbox-image');
+    const closeButton = document.querySelector('#rcf-image-lightbox-close');
+    const productsPanel = document.querySelector('#rcf-products-panel');
+
+    if (!lightbox || !lightboxImage || !closeButton || !productsPanel) {
+        return;
+    }
+
+    const closeLightbox = function () {
+        lightbox.setAttribute('hidden', 'hidden');
+        lightbox.setAttribute('aria-hidden', 'true');
+        lightboxImage.setAttribute('src', '');
+        lightboxImage.setAttribute('alt', '');
+    };
+
+    const openLightbox = function (src, alt) {
+        if (!src) {
+            return;
+        }
+
+        lightboxImage.setAttribute('src', src);
+        lightboxImage.setAttribute('alt', alt || 'Imagen ampliada de producto');
+        lightbox.removeAttribute('hidden');
+        lightbox.setAttribute('aria-hidden', 'false');
+        closeButton.focus();
+    };
+
+    productsPanel.addEventListener('click', function (event) {
+        const trigger = event.target.closest('[data-rcf-lightbox-trigger="true"]');
+        if (!trigger) {
+            return;
+        }
+
+        openLightbox(trigger.dataset.imageSrc, trigger.dataset.imageAlt || '');
+    });
+
+    closeButton.addEventListener('click', function () {
+        closeLightbox();
+    });
+
+    lightbox.addEventListener('click', function (event) {
+        if (event.target !== lightbox) {
+            return;
+        }
+
+        closeLightbox();
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && !lightbox.hasAttribute('hidden')) {
+            closeLightbox();
+        }
     });
 }

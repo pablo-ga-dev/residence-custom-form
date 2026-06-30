@@ -85,6 +85,28 @@ class ClientForm {
 			}
 		}
 
+		foreach ( $grouped as $group_key => $group ) {
+			$regular_products = [];
+			$pack_products = [];
+
+			foreach ( $group['products'] as $product ) {
+				$title = (string) ( $product['title'] ?? '' );
+
+				if ( stripos( $title, 'pack' ) !== false ) {
+					$pack_products[] = $product;
+					continue;
+				}
+
+				$regular_products[] = $product;
+			}
+
+			usort( $regular_products, function ( array $a, array $b ) {
+				return strcasecmp( (string) ( $a['title'] ?? '' ), (string) ( $b['title'] ?? '' ) );
+			} );
+
+			$grouped[ $group_key ]['products'] = array_merge( $regular_products, $pack_products );
+		}
+
 		$grouped_values = array_values( $grouped );
 
 		usort( $grouped_values, function ( array $a, array $b ) {
