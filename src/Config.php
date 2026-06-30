@@ -3,7 +3,7 @@
 namespace Crearco\Rcf;
 
 class Config {
-	public const VERSION = '1.2.2';
+	public const VERSION = '1.2.3';
 	public const SLUG = 'residence-custom-form';
 	public const TEXT_DOMAIN = 'residence-custom-form';
 
