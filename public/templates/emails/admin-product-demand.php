@@ -1,8 +1,3 @@
-<?php
-
-use Crearco\Rcf\I18n\Translator;
-
-?>
 <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f4f4; padding:20px;">
 	<tr>
 		<td align="center">
