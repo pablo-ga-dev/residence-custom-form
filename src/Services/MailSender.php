@@ -3,6 +3,7 @@
 namespace Crearco\Rcf\Services;
 
 use Crearco\Rcf\Config;
+use Crearco\Rcf\I18n\Translator;
 
 class MailSender {
 	private static Config $config;
@@ -17,21 +18,21 @@ class MailSender {
 
 	public function submit(): void {
 		if ( ! check_ajax_referer( 'rcf_submit_order', '_ajax_nonce', false ) ) {
-			wp_send_json_error( [ 'message' => 'Nonce invalido.' ], 403 );
+			wp_send_json_error( [ 'message' => Translator::translate( 'Nonce invalido.' ) ], 403 );
 		}
 
 		try {
 			$to = 'pablo.ga@benowu.com';
-			$subject = 'Nuevo pedido de residencia';
+			$subject = Translator::translate( 'Nuevo pedido de residencia' );
 			$raw_post = wp_unslash( $_POST );
 			$data = $this->prepareData( $raw_post );
 
 			if ( empty( $data['email'] ) || empty( $data['nombre_empresa'] ) ) {
-				wp_send_json_error( [ 'message' => 'Faltan datos obligatorios del cliente.' ], 422 );
+				wp_send_json_error( [ 'message' => Translator::translate( 'Faltan datos obligatorios del cliente.' ) ], 422 );
 			}
 
 			if ( empty( $data['productos'] ) ) {
-				wp_send_json_error( [ 'message' => 'No hay productos seleccionados.' ], 422 );
+				wp_send_json_error( [ 'message' => Translator::translate( 'No hay productos seleccionados.' ) ], 422 );
 			}
 
 			$body = $this->generateEmailContent( $data );
@@ -39,13 +40,13 @@ class MailSender {
 
 			$sent = wp_mail( $to, $subject, $body, $headers );
 			if ( ! $sent ) {
-				wp_send_json_error( [ 'message' => 'No se pudo enviar el email.' ], 500 );
+				wp_send_json_error( [ 'message' => Translator::translate( 'No se pudo enviar el email.' ) ], 500 );
 			}
 
 			wp_send_json_success();
 		} catch (\Throwable $exception) {
 			error_log( 'RCF submit error: ' . $exception->getMessage() );
-			wp_send_json_error( [ 'message' => 'Error interno al procesar el pedido.' ], 500 );
+			wp_send_json_error( [ 'message' => Translator::translate( 'Error interno al procesar el pedido.' ) ], 500 );
 		}
 	}
 

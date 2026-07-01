@@ -1,3 +1,8 @@
+<?php
+
+use Crearco\Rcf\I18n\Translator;
+
+?>
 <div class="rcf-products-panel" id="rcf-products-panel">
 	<?php if ( ! empty( $products_by_category ) && is_array( $products_by_category ) ) : ?>
 		<div class="rcf-products-list" id="rcf-products-list">
@@ -11,7 +16,7 @@
 								<button type="button" class="rcf-product-media" data-rcf-lightbox-trigger="true"
 									data-image-src="<?php echo esc_url( $product['image_large'] ?? $product['image'] ); ?>"
 									data-image-alt="<?php echo esc_attr( $product['title'] ); ?>"
-									aria-label="Ver imagen ampliada de <?php echo esc_attr( $product['title'] ); ?>">
+									aria-label="<?php echo esc_attr( Translator::translate( 'Ver imagen ampliada de %s', [ $product['title'] ] ) ); ?>">
 									<img src="<?php echo esc_url( $product['image'] ); ?>" class="rcf-product-image"
 										alt="<?php echo esc_attr( $product['title'] ); ?>">
 								</button>
@@ -24,7 +29,7 @@
 								</div>
 								<div class="rcf-product-qty" id="rcf-qty-selector-<?php echo (int) $product['id']; ?>">
 									<button type="button" class="rcf-qty-button"
-										aria-label="Restar unidad de <?php echo esc_attr( $product['title'] ); ?>"
+										aria-label="<?php echo esc_attr( Translator::translate( 'Restar unidad de %s', [ $product['title'] ] ) ); ?>"
 										onclick="changeQty(<?php echo (int) $product['id']; ?>, -1)">-</button>
 									<input type="number" name="qty[<?php echo (int) $product['id']; ?>]"
 										id="rcf-input-qty-<?php echo (int) $product['id']; ?>" class="rcf-qty-input" min="0"
@@ -32,7 +37,7 @@
 										data-name="<?php echo esc_attr( $product['title'] ); ?>"
 										data-id="<?php echo esc_attr( $product['id'] ); ?>">
 									<button type="button" class="rcf-qty-button"
-										aria-label="Añadir unidad de <?php echo esc_attr( $product['title'] ); ?>"
+										aria-label="<?php echo esc_attr( Translator::translate( 'Añadir unidad de %s', [ $product['title'] ] ) ); ?>"
 										onclick="changeQty(<?php echo (int) $product['id']; ?>, 1)">+</button>
 								</div>
 							</div>
@@ -43,9 +48,10 @@
 		</div>
 	<?php endif; ?>
 	<div class="rcf-image-lightbox" id="rcf-image-lightbox" hidden aria-hidden="true">
-		<div class="rcf-image-lightbox-dialog" role="dialog" aria-modal="true" aria-label="Vista ampliada de producto">
+		<div class="rcf-image-lightbox-dialog" role="dialog" aria-modal="true"
+			aria-label="<?php echo esc_attr( Translator::translate( 'Vista ampliada de producto' ) ); ?>">
 			<button type="button" class="rcf-image-lightbox-close" id="rcf-image-lightbox-close"
-				aria-label="Cerrar vista ampliada">x</button>
+				aria-label="<?php echo esc_attr( Translator::translate( 'Cerrar vista ampliada' ) ); ?>">x</button>
 			<img src="" alt="" class="rcf-image-lightbox-image" id="rcf-image-lightbox-image">
 		</div>
 	</div>

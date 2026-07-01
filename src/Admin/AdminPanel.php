@@ -2,6 +2,8 @@
 
 namespace Crearco\Rcf\Admin;
 
+use Crearco\Rcf\I18n\Translator;
+
 class AdminPanel {
 
 	public function init() {
@@ -12,7 +14,7 @@ class AdminPanel {
 	public function add_meta_boxes() {
 		add_meta_box(
 			'producto_precio',
-			'Precio',
+			Translator::translate( 'Precio' ),
 			[ $this, 'get_precio_html' ],
 			'producto',
 			'normal'
@@ -20,7 +22,7 @@ class AdminPanel {
 
 		add_meta_box(
 			'producto_referencia',
-			'Referencia',
+			Translator::translate( 'Referencia' ),
 			[ $this, 'get_referencia_html' ],
 			'producto',
 			'normal'
@@ -32,7 +34,7 @@ class AdminPanel {
 		wp_nonce_field( 'guardar_producto_precio', 'producto_precio_nonce' );
 		?>
 		<p>
-			<label for="producto_precio">Precio</label>
+			<label for="producto_precio"><?php echo esc_html( Translator::translate( 'Precio' ) ); ?></label>
 			<input type="number" step="0.01" min="0" name="producto_precio" id="producto_precio"
 				value="<?php echo esc_attr( $precio ); ?>" style="width:100%;">
 		</p>
@@ -44,7 +46,7 @@ class AdminPanel {
 		wp_nonce_field( 'guardar_producto_referencia', 'producto_referencia_nonce' );
 		?>
 		<p>
-			<label for="producto_referencia">Referencia</label>
+			<label for="producto_referencia"><?php echo esc_html( Translator::translate( 'Referencia' ) ); ?></label>
 			<input type="text" name="producto_referencia" id="producto_referencia"
 				value="<?php echo esc_attr( $referencia ); ?>" style="width:100%;">
 		</p>

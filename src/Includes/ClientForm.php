@@ -4,6 +4,7 @@ namespace Crearco\Rcf\Includes;
 
 use Crearco\Rcf\Model\ProductModel;
 use Crearco\Rcf\Config;
+use Crearco\Rcf\I18n\Translator;
 
 class ClientForm {
 	private ProductModel $productModel;
@@ -60,7 +61,7 @@ class ClientForm {
 				if ( ! isset( $grouped[ $key ] ) ) {
 					$grouped[ $key ] = [
 						'id' => 0,
-						'name' => 'Sin categoría',
+						'name' => Translator::translate( 'Sin categoría' ),
 						'slug' => $key,
 						'products' => [],
 					];
@@ -75,7 +76,7 @@ class ClientForm {
 				if ( ! isset( $grouped[ $key ] ) ) {
 					$grouped[ $key ] = [
 						'id' => (int) ( $category['id'] ?? 0 ),
-						'name' => $category['name'] ?? 'Sin categoría',
+						'name' => $category['name'] ?? Translator::translate( 'Sin categoría' ),
 						'slug' => $category['slug'] ?? '',
 						'products' => [],
 					];

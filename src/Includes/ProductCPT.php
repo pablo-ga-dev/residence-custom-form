@@ -2,6 +2,8 @@
 
 namespace Crearco\Rcf\Includes;
 
+use Crearco\Rcf\I18n\Translator;
+
 class ProductCPT {
 	public function init() {
 		add_action( 'init', [ $this, 'register' ] );
@@ -10,10 +12,10 @@ class ProductCPT {
 	public function register() {
 		register_post_type( 'producto', [
 			'labels' => [
-				'name' => 'Productos Formulario',
-				'singular_name' => 'Producto Formulario',
-				'add_new_item' => 'Añadir producto formulario',
-				'edit_item' => 'Editar producto formulario',
+				'name' => Translator::translate( 'Productos Formulario' ),
+				'singular_name' => Translator::translate( 'Producto Formulario' ),
+				'add_new_item' => Translator::translate( 'Añadir producto formulario' ),
+				'edit_item' => Translator::translate( 'Editar producto formulario' ),
 			],
 			// This CPT is only used as an internal catalog for the shortcode form.
 			'public' => false,
@@ -32,15 +34,15 @@ class ProductCPT {
 
 		register_taxonomy( 'producto_categoria', [ 'producto' ], [
 			'labels' => [
-				'name' => 'Categorias de producto',
-				'singular_name' => 'Categoria de producto',
-				'search_items' => 'Buscar categorias',
-				'all_items' => 'Todas las categorias',
-				'edit_item' => 'Editar categoria',
-				'update_item' => 'Actualizar categoria',
-				'add_new_item' => 'Anadir nueva categoria',
-				'new_item_name' => 'Nombre de la categoria',
-				'menu_name' => 'Categorias',
+				'name' => Translator::translate( 'Categorias de producto' ),
+				'singular_name' => Translator::translate( 'Categoria de producto' ),
+				'search_items' => Translator::translate( 'Buscar categorias' ),
+				'all_items' => Translator::translate( 'Todas las categorias' ),
+				'edit_item' => Translator::translate( 'Editar categoria' ),
+				'update_item' => Translator::translate( 'Actualizar categoria' ),
+				'add_new_item' => Translator::translate( 'Anadir nueva categoria' ),
+				'new_item_name' => Translator::translate( 'Nombre de la categoria' ),
+				'menu_name' => Translator::translate( 'Categorias' ),
 			],
 			'public' => false,
 			'publicly_queryable' => false,

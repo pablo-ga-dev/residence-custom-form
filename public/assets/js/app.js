@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-const RCF_GENERIC_ERROR_MESSAGE = 'Error al enviar el pedido. Por favor, intentalo de nuevo o pongase en contacto con nosotros si el problema persiste.';
+const RCF_I18N = (typeof rcfData !== 'undefined' && rcfData.i18n) ? rcfData.i18n : {};
+const RCF_GENERIC_ERROR_MESSAGE = RCF_I18N.genericError || 'Error al enviar el pedido. Por favor, intentalo de nuevo o pongase en contacto con nosotros si el problema persiste.';
 
 function changeQty(productId, qty) {
     const input = document.querySelector(`#rcf-input-qty-${productId}`);
@@ -57,7 +58,7 @@ function updateSummary() {
     if (!hasItems) {
         const emptyMessage = document.createElement('p');
         emptyMessage.classList.add('rcf-summary-empty');
-        emptyMessage.textContent = 'No has seleccionado ningún pack todavía.';
+        emptyMessage.textContent = RCF_I18N.emptySelection || 'No has seleccionado ningún pack todavía.';
         summaryItemsContainer.appendChild(emptyMessage);
     }
 
@@ -75,7 +76,7 @@ function submitForm(form) {
 
         try {
             if (!isAjaxConfigValid()) {
-                throw new Error('Configuracion AJAX no disponible.');
+                throw new Error(RCF_I18N.ajaxNotAvailable || 'Configuracion AJAX no disponible.');
             }
 
             if (!form.checkValidity()) {
@@ -85,7 +86,7 @@ function submitForm(form) {
 
             const products = prepareData();
             if (!products.length) {
-                throw new Error('Debes seleccionar al menos un producto.');
+                throw new Error(RCF_I18N.minimumProduct || 'Debes seleccionar al menos un producto.');
             }
 
             const customerName = getFieldValue('#rcf-customer-name');
@@ -154,7 +155,7 @@ function cleanAside(bool, errorMessage) {
     asideContent.classList.add('rcf-aside-content');
     const asideText = document.createElement('p');
     if (bool) {
-        asideText.textContent = 'Tu pedido se ha enviado correctamente! En breve nos pondremos en contacto contigo para confirmar los detalles y el pago. ¡Gracias por confiar en nosotros!';
+        asideText.textContent = RCF_I18N.successOrder || 'Tu pedido se ha enviado correctamente! En breve nos pondremos en contacto contigo para confirmar los detalles y el pago. ¡Gracias por confiar en nosotros!';
     } else {
         asideText.textContent = errorMessage || RCF_GENERIC_ERROR_MESSAGE;
     }
@@ -223,7 +224,7 @@ function initProductImageLightbox() {
         }
 
         lightboxImage.setAttribute('src', src);
-        lightboxImage.setAttribute('alt', alt || 'Imagen ampliada de producto');
+        lightboxImage.setAttribute('alt', alt || RCF_I18N.lightboxAlt || 'Imagen ampliada de producto');
         lightbox.removeAttribute('hidden');
         lightbox.setAttribute('aria-hidden', 'false');
         closeButton.focus();
